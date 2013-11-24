@@ -1,0 +1,62 @@
+<div class="container">		
+	<div class="row-fluid">
+		<!-- Search Results -->
+		<div class="span9">
+			<br>
+			<%= render "layouts/messages" %>
+			<% @preps.each do |p| %>
+		    <div class="row-fluid">
+		      <div class="booking-blocks">
+		        <div class="pull-left booking-img">
+		        	<div class="row-fluid">
+ 								<%= image_tag p.user.profile.photo.url(:medium) %>
+		            <ul class="unstyled inline rating-star">
+		               <li><span class="rating-static rating-45"></span></li>
+		               <li><i class="icon-star"></i></li>
+		               <li><i class="icon-star"></i></li>
+		               <li><i class="icon-star"></i></li>
+		               <li><i class="icon-star"></i></li>
+		               <li><i class="icon-star-empty"></i></li>
+		            </ul>
+ 							</div>
+		        </div>
+		        <div class="span8" style="overflow:hidden;">
+	            <h4><b>
+	            	<%= link_to p.title, prep_path(p), :class => 'color-blue' %>
+	            	 - <%= p.user.fullname %>
+	            </b></h4>
+	            <p>Posted <%= p.elapsed %> ago </p>
+	            <p>
+								<% if !p.description.nil? && p.description.length > 200 %>
+		            	<%= p.description.slice(0, 200) + "... " %>
+		            	<a href="#">more</a>
+		            <% else %>
+		            	<%= p.description %>
+		            <% end %>
+		          </p>
+		          <p>
+		          	<%= link_to 'Confirm', prep_prep_application_confirmed_path(p.id, p.prep_applications.find_by_user_id(current_user.id).id), :class => 'color-blue' %> / 
+
+		          	<%= link_to 'Decline', prep_prep_application_withdraw_path(p.id, p.prep_applications.find_by_user_id(current_user.id).id), :class => 'color-blue' %>
+		          </p>
+		          <div>
+			         	<ul class="inline blog-tags">
+			         		<%
+			         			required_skills = p.required_skills.split(',')[0..3]
+			         		%>
+			         		<% required_skills.each do |s| %>
+		            		<li><a href="#"><%= s %></a></li>
+		            	<% end %>
+		            </ul>
+		          </div>
+			      </div>
+	        </div>
+		    </div>
+	    <% end %>
+		</div><!--/span9-->
+
+		<div class="span3">
+	    <%= render "profile_sidebar" %><!-- :locals => { member: Member.new(), group_id: @group.id } -->
+		</div><!--/span3-->
+	</div><!--/row-fluid-->
+</div><!--/container-->

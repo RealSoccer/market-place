@@ -1,0 +1,75 @@
+<!--=== Content Part ===-->
+<br>
+<div class="container">
+	<div class="span8">
+		<div id="new-profile" class="row-fluid">
+			<%= simple_form_for :profile, :url => profile_path(current_user.profile), :html => {:method => :put, :class => 'form-horizontal' } do |p| %>
+				<h3 class="color-black">Create your contractor profile</h3>
+				<br>
+				<p>Create your contractor profile so we can show you the best-matching preps</p>
+				<div class="alert alert-info">
+					<span style="font-size:16px;">Profile Overview</span>
+				</div>
+				<div class="control-group">
+	        <%= p.label :portrait, 'Portrait (Optional)', :class => 'control-label' %>
+	        <div class="controls">
+	        	<div class="pull-left">
+		        	<div class="profile-img-wrapper img-width-120">
+		        		<span></span>
+		          	<img id="photo" src="/assets/blank_user.jpg">
+		          </div>
+		        </div>
+	          <div class="pull-left" id="profile-photo">
+							<h4 class="color-black">You need a photo!</h4>
+							<p>Preppers with a friendly, professional looking portrait are hired</p>
+							<p><span class="color-black"><b>5 times more often</b></span> than those without a photo</p>
+
+							<a id="profile_photo_link">Add Photo</a>
+							<%= p.file_field :photo, style: "display: none" %>
+						</div>
+	        </div>
+		    </div>
+		    <%= p.input :title %>
+
+	      <div class="control-group">
+	        <%= p.label :overview, 'Overview', :class => 'control-label' %>
+	        <div class="controls">
+	          <%= p.text_area :overview, :style => 'width: 400px; height: 200px;' %>
+	          <p>Include your short summary of your career goals and relevant your experiences. This is the opportunity to sell yourself</p>
+	        </div>
+		    </div>
+
+	      <%= p.input :year_of_experience, collection: 1..20, prompt: "Please Select..." %>
+				<div class="control-group">
+	        <%= p.label :industries, 'Industry experience', :class => 'control-label' %>
+	        <div class="controls">
+	          <table class="" style="width: 400px">
+	          	<tr>
+	          		<td>Main Category</td>
+
+	          		<td>Sub Category</td>
+	          	</tr>
+	          </table>
+	          <br>
+	          <p>Include your short summary of your career goals and relevant your experiences. This is the opportunity to sell yourself</p>
+	        </div>
+		    </div>
+		    <div class="alert alert-info">
+					<span style="font-size:16px;">Location Information</span>
+				</div>
+				<p>Your address and phone number will not be shared publicly</p>
+		    <%= p.input :address, required: true %>
+		    <%= p.input :city, required: true %>
+		    <%= p.input :country, required: true %>
+		    <%= p.input :zipcode, required: true, label: "Zip code" %>
+		    <%#= p.input :state, required: true %>
+		    <%= p.input :phone, :class => "input-mask-phone" %>
+	      <div class="controls form-inline">
+	      	<%= p.submit "Save", :class => "btn-u" %>
+	      </div>
+		  <% end %>
+  	</div><!--/row-fluid-->
+	</div>
+
+</div><!--/container-->		
+<!--=== End Content Part ===-->

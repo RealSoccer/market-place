@@ -1,0 +1,62 @@
+<style type="text/css"> /*Calendar Caption*/
+.fc-header-title h2 {
+    margin-top: 0;
+    white-space: nowrap;
+    font-size: 20px;
+}
+</style>
+<!-- My Profile -->
+<div class="margin-bottom-5">
+  <br>
+  <div class="row-fluid white-background">
+    <div class="span6">
+      <div class="profile-img-wrapper img-width-120">
+        <%= image_tag current_user.profile.photo.url(:medium) %>
+      </div>
+    </div>
+    <div class="span6">
+      <br><br>
+      <div class="progress pull-left" data-percent="<%= completeness %>%" style="width: 120px;">
+        <div class="bar" style="width:<%= completeness %>%">
+        </div>
+      </div>
+      <%= link_to "Complete your proflie", edit_profile_path(current_user.profile) %>
+    </div>
+  </div>
+</div>
+<div class="row-fluid white-background">
+  <div class="span12">
+    <div class="space"></div>
+    <div id="preppee_calendar" class="calendar"></div>
+  </div>
+</div>
+<div class="row-fluid white-background">
+  <div style="margin-left: 10px;">
+    <h5><%= link_to "Add Interview Prep", new_prep_path(:prep_type => 'interview') %></h5>
+    <h5><%= link_to "Add Resume Prep", new_prep_path(:prep_type => 'resume') %></h5>
+    <h5><%= link_to "Purchase Prep Guide" %></h5>
+  </div>
+</div>
+
+<script type="text/javascript">
+$(function(){
+
+  $("#preppee_calendar").fullCalendar({
+    events: [
+    <% @scheduled_contracts.each do |schedule| %>
+    {
+      title: '<%= schedule[1] %>',
+      start: new Date(Date.parse("<%= schedule[0] %>")),
+      className: 'btn-u-red'
+    },
+    <% end %>
+    ],
+    header: {
+      left: 'prev',
+      center: 'title',
+      right: 'next'
+    }
+  });
+});
+
+</script>

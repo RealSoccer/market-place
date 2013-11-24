@@ -1,0 +1,19 @@
+<div class="container">
+	<div class="row-fluid">
+	<%= simple_form_for(resource, :as => resource_name, :url => confirmation_path(resource_name), :html => { :method => :post, :class => 'log-page' }) do |f| %>
+		<h3>Resend confirmation instructions</h3>
+	  <%= f.error_notification %>
+	  <%= f.full_error :confirmation_token %>
+
+	  <div class="form-inputs">
+	    <%= f.input :email, :required => true, :autofocus => true %>
+	  </div>
+
+	  <div class="form-inline">
+	    <%= f.button :submit, "Resend confirmation instructions" %>
+	  </div>
+
+	  <%= render "devise/shared/links" %>
+	<% end %>
+	</div>
+</div>

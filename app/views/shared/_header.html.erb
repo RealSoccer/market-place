@@ -1,0 +1,104 @@
+
+<!--=== Header ===-->
+<div class="<%= header_class %>">
+  <div class="menu">
+    <div class="container">
+      <!-- Logo -->
+      <div class="logo">                       
+        <h2>
+          <a href="/" style="font-weight: bolder; text-decoration:none;">
+            <span style="color: white;">sleekgeek</span><span style="color: orange"> prep</span>
+          </a>
+        </h2>
+      </div><!-- /logo -->    
+
+      <!-- Menu -->
+      <div class="navbar">
+        <div class="navbar-inner">                  
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a><!-- /nav-collapse -->
+          <div class="nav-collapse collapse">
+            <% if landing_page %>
+              <%= render "shared/landing_menu" %>
+            <% else %>
+              <% if user_signed_in? %>
+                <% if current_user.has_role? :admin %>
+                  <%= render "shared/admin_menu" %>
+                <% elsif current_user.has_role? :preppee %>
+                  <%= render "shared/preppee_menu" %>
+                <% elsif current_user.has_role? :prepper %>
+                  <%= render "shared/prepper_menu" %>
+                <% end %>
+                <ul class="nav top-2">
+                  <li>
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                      <%= image_tag current_user.profile.photo.url(:medium), style: "width: 40px;" %>
+                      <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li><%= link_to '<i class="icon-user"></i> Edit Profile'.html_safe, edit_profile_path(current_user.profile.token) %></li>
+                      <li><%= link_to '<i class="icon-signout"></i> Logout'.html_safe, destroy_user_session_path, :method=>'delete' %></li>
+                    </ul>
+                    <b class="caret-out"></b>
+                  </li>
+                </ul>
+              <% end %>
+            <% end %>
+            <div class="search-open">
+              <div class="input-append">
+                <form>
+                  <input type="text" class="span3" placeholder="Search" />
+                  <button type="submit" class="btn-u">Go</button>
+                </form>
+              </div>
+            </div>
+          </div><!-- /nav-collapse -->                
+        </div><!-- /navbar-inner -->
+      </div><!-- /navbar -->
+
+    </div><!-- /container -->
+  </div>
+  <% if landing_page && !signup_page%>
+  <div id="banner-area">
+    <div class="container margin-top-30">
+      <h1> SLEEKGEEK PREP WORKS FOR YOU</h1>
+      <div class="row-fluid margin-top-40">
+        <div class="span6">
+          <br>
+          <h3 style="color:#fefefe">
+            Our unique prep marketplace brings industry experts and job seekers together to help preppees gain the competitive edge
+          </h3>
+          <br>
+          <p>
+            <a href="/select_user" class="btn btn-success btn-large">
+              <b>GET STARTED</b>
+              <span class="glyphicon glyphicon-circle-arrow-right"></span>
+            </a>
+          </p>
+        </div>
+        <div class="span6">
+          <!-- <iframe src="http://player.vimeo.com/video/47911018" width="100%" height="320" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>  -->
+        </div>
+      </div>
+    </div>
+  </div><!-- /banner-area -->
+  <% end %>
+
+  <% if landing_page && !signup_page%>
+  <div class="clients">
+    <ul class="inline span11 center">
+      <li><img src="/assets/clients/1.png"></li>
+      <li><img src="/assets/clients/2.png"></li>
+      <li><img src="/assets/clients/3.png"></li>
+      <li><img src="/assets/clients/4.png"></li>
+      <li><img src="/assets/clients/5.png"></li>
+      <li><img src="/assets/clients/6.png"></li>
+    </ul>
+  </div>
+  <% end %>
+</div><!--/header -->
+
+<!--=== End Header ===-->

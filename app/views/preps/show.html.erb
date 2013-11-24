@@ -1,0 +1,137 @@
+<div class="container">
+  <br><br>
+  <div class="span10" style="float: none !important; margin-left: auto; margin-right: auto;">
+    <div class="row-fluid">
+      <div class="span8">
+        <!-- Prep Title -->
+        <div class="row-fluid margin-bottom-40">
+          <h2><%= @prep.title %></h2>
+          <p><%= @prep.prep_type.capitalize %> - <%= @prep.elapsed %> ago</p>
+        </div><!--/row-->
+        <!-- //End Prep Title -->
+
+        <div class="row-fluid">
+          <div class="alert alert-info">
+            <h4>Prep Description</h4>
+          </div>
+          <div class="span11">
+            <p>
+              <%= @prep.description.gsub("\n", "<br>").html_safe unless @prep.description.nil? %>
+            </p>
+            <br><br>
+            <p><strong>Skills Required</strong></p>
+            <div>
+              <ul class="inline blog-tags">
+                <%
+                unless @prep.required_skills.nil?
+                  tags = @prep.required_skills.split(',')
+                %>
+                <% tags.each do |t| %>
+                  <li><a href="#"><%= t %></a></li>
+                <% 
+                  end 
+                end
+                %>
+              </ul>
+            </div>
+            <br><br>
+          </div>
+        </div><!--/row-fluid-->
+        <div class="row-fluid">
+          <div class="span5 pull-right">
+            <p>Applied Preppers: <%= @prep.prep_applications.size %></p>
+            <% hired = @prep.prep_applications.find_by_status(:confirmed) %>
+            <% unless hired.nil? %>
+            Hired: <%= link_to hired.user.fullname, profile_path(hired.user.profile.token) %>
+            <% end %>
+          </div>
+        </div><!--/row-fluid-->
+        <br>
+        <!--Application List -->
+        <div class="row-fluid">
+          <div class="alert alert-info">
+            <h4>Applications</h4>
+          </div>
+          <div class="span11">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Contractor</th>
+                  <th>Date Applied</th>
+                  <th>Initiated By</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @prep.prep_applications.each do |a| %>
+                <tr>
+                  <td><%= a.user.fullname %></td>
+                  <td><%= a.elapsed %> ago</td>
+                  <td>Contractor</td>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+          <br><br><br><br><br>
+        </div><!-- Application List -->
+        <!-- Prepee's History -->
+        <div class="row-fluid">
+          <div class="alert alert-info">
+            <h4>Preppee's History</h4>
+          </div>
+          <br><br><br>
+        </div><!-- Preppee's History -->
+      </div><!--/span8-->
+
+      <div class="span4" style="background-color: #f3f3f3; padding: 20px;">
+        <!-- Prep Overview -->
+        <% if current_user.roles.first.name == "prepper" %>
+          <p class="text-center">
+            <a data-toggle="modal" data-target="#apply-form" class="btn btn-large <%= 'btn-success' if @applied.nil? %>">
+              <strong>Apply for this Prep</strong>
+            </a>
+            <% if @applied.nil? %>
+              <%= render :partial => "apply_form" %>
+            <% end %>
+          </p>
+        <% end %>
+        <br>
+        <strong>Prep Overview</strong>
+        <br>
+        <table class="table table-condensed">
+          <thead>
+            <tr style="font-weight: normal;">
+              <td>Type</td>
+              <td style="text-align: right;"><%= @prep.prep_type.capitalize %></td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Industry</td>
+              <td style="text-align: right;"><%= get_job_name(@prep.job_type_id) %></td>
+            </tr>
+            <!-- Product Type -->
+            <% unless @product.nil? %>
+            <tr>
+              <td>Product</td>
+              <td style="text-align: right;"><%= @product.product_name %></td>
+            </tr>
+            <tr>
+              <td>Session</td>
+              <td style="text-align: right;"><%= @product.session_name %></td>
+            </tr>
+            <tr>
+              <td>Price</td>
+              <td style="text-align: right;"><%= @product.price %></td>
+            </tr>
+            <% end %>
+            <tr>
+              <td>Due date</td>
+              <td style="text-align: right;">Contract.find_by_prep_id(</td>
+            </tr>
+          </tbody>
+        </table>
+      </div><!--/span4-->
+    </div><!--/row-fluid-->
+  </div>
+</div><!--/container

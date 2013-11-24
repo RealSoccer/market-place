@@ -1,0 +1,9 @@
+<div style="width: 700px;">
+  <h2 style="color: #3498db"> You are invited for prep by <%= @user.fullname %></h2>
+  <hr>
+  <h4><%= link_to @prep.title, '#' %></h4>
+  <p><%= @prep.description.gsub("\n", "<br>").html_safe unless @prep.description.nil? %></p>
+  <hr>
+  <p>sleekgeekllc.com</p>
+  <p>Contacts: </p>
+</div>

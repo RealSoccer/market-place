@@ -1,0 +1,36 @@
+<!--=== Content Part ===-->
+<div class="body">
+	<div class="container">		
+    <div class="span8 center white-background">
+		<div class="row-fluid margin-20">
+    	<%= simple_form_for(@prep, :url => preps_path, :html => {:method => :post, :class => 'form-vertical prep-form' }) do |f| %>
+			  <%= f.error_notification %>
+        <div class="controls">
+          <%= f.hidden_field :prep_type %>
+          
+          <%= label_tag :job_type_id, "Industry", :style => 'font-weight:bold' %>
+          <%= f.input_field :job_type_id, collection: JobType.all %>
+          
+          <%= label_tag :product_id, "Products", :style => 'font-weight:bold' %>
+          <%= f.input_field :product_id, collection: Product.where(product_type: 0), prompt: "Please select product" %>
+
+          <%= label_tag :required_skills, "Skills / Specialization", :style => 'font-weight:bold' %>
+          <%= f.input_field :required_skills, collection: SkillTag.all, :class => 'chzn-select', multiple: "" %>
+
+          <% if params[:prep_type] == "resume" %>
+            <%= label_tag :attachment_url, "Upload Resume/Cover Letter file" %>
+            <%= f.file_field :attachment_url %>
+          <% end %>
+
+          <%= f.input :title %>
+          <%= f.input :description, as: :text %>
+
+          <%= f.submit 'Create Prep', :class => 'btn-u' %>
+          <input type="button" value="Back" class="btn-u" onclick="history.back();">
+        </div>
+    	<% end %>
+    </div><!--/row-fluid-->
+  </div>
+	</div><!--/container-->		
+</div><!--/body-->
+<!--=== End Content Part ===-->
